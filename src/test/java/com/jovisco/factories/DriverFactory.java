@@ -43,7 +43,7 @@ public class DriverFactory {
         var chromeOptions = new ChromeOptions();
         chromeOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
         chromeOptions.addArguments("--remote-allow-origins=*");
-        // chromeOptions.addArguments("--headless");
+        chromeOptions.addArguments("--headless");
         var driver = new ChromeDriver(chromeOptions);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
         return driver;
