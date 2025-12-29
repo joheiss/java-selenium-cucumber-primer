@@ -1,5 +1,6 @@
 package com.jovisco.factories;
 
+import org.apache.commons.lang3.SystemUtils;
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -38,7 +39,7 @@ public class DriverFactory {
         return driver;
     }
     private static WebDriver createChromeDriver() {
-        System.setProperty("webdriver.chrome.driver", "src/test/resources/drivers/chromedriver");
+        System.setProperty("webdriver.chrome.driver", getDriverPath() + "chromedriver");
         var chromeOptions = new ChromeOptions();
         chromeOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
         chromeOptions.addArguments("--remote-allow-origins=*");
@@ -49,7 +50,7 @@ public class DriverFactory {
     }
 
     private static WebDriver createFirefoxDriver() {
-        System.setProperty("webdriver.gecko.driver", "src/test/resources/drivers/geckodriver");
+        System.setProperty("webdriver.gecko.driver", getDriverPath() + "geckodriver");
         var geckoOptions = new FirefoxOptions();
         geckoOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
         // geckoOptions.addArguments("--remote-allow-origins=*");
@@ -73,5 +74,16 @@ public class DriverFactory {
             browserType = "chrome";
         }
         return browserType;
+    }
+
+    private static String getDriverPath() {
+        String os = SystemUtils.OS_NAME;
+        String suffix = "linux";
+        if (os.toLowerCase().contains("mac")) {
+            suffix = "mac";
+        } else if (os.toLowerCase().contains("win")) {
+            suffix = "win";
+        }
+        return "src/test/resources/drivers/" + suffix + "/";
     }
 }
