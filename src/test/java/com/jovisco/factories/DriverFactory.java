@@ -66,10 +66,10 @@ public class DriverFactory {
             props.load(file);
             return props.getProperty("browser").toLowerCase().trim();
         } catch (FileNotFoundException e) {
-            IO.println("config.properties file not found");
+            System.out.println("config.properties file not found");
             browserType = "chrome";
         } catch (IOException e) {
-            IO.println("Error reading config.properties file");
+            System.out.println("Error reading config.properties file");
             browserType = "chrome";
         }
         return browserType;
