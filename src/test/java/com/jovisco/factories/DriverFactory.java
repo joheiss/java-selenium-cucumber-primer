@@ -53,7 +53,16 @@ public class DriverFactory {
         chromeOptions.addArguments("--disable-dev-shm-usage");
         chromeOptions.addArguments("--disable-gpu");
         chromeOptions.addArguments("--window-size=1920,1080");
-        var driver = new ChromeDriver(chromeOptions);
+        WebDriver driver;
+        if (System.getProperty("os.name").toLowerCase().contains("linux")) {
+            try {
+                driver = new RemoteWebDriver(URI.create("http://selenium-hub:4444/wd/hub").toURL(), chromeOptions);
+            } catch (MalformedURLException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            driver = new ChromeDriver(chromeOptions);
+        }
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
         return driver;
     }
@@ -66,12 +75,15 @@ public class DriverFactory {
         geckoOptions.addArguments("--headless");
         geckoOptions.setAcceptInsecureCerts(true);
         WebDriver driver;
-        try {
-            driver = new RemoteWebDriver(URI.create("http://selenium-hub:4444/wd/hub").toURL(), geckoOptions);
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
+        if (System.getProperty("os.name").toLowerCase().contains("linux")) {
+            try {
+                driver = new RemoteWebDriver(URI.create("http://selenium-hub:4444/wd/hub").toURL(), geckoOptions);
+            } catch (MalformedURLException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            driver = new FirefoxDriver(geckoOptions);
         }
-        // var driver = new FirefoxDriver(geckoOptions);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
         return driver;
     }
