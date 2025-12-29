@@ -83,6 +83,9 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.1.2</version>
         <configuration>
+          <suiteXmlFiles>
+            <suiteXmlFile>src/test/java/com.jovisco/runners/testng/testng.xml</suiteXmlFile>
+          </suiteXmlFiles>
           <properties>
             <configurationParameters>
               cucumber.plugin=pretty,html:target/cucumber-report.html,json:target/cucumber-report.json

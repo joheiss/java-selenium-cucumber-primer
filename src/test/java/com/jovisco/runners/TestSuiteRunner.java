@@ -8,7 +8,7 @@ import org.testng.annotations.DataProvider;
         features = { "classpath:features" },
         glue = { "stepDefinitions" },
         plugin = { "pretty", "html:target/cucumber-report.html", "json:target/cucumber-report.json" },
-        tags = "@regression",
+        // tags = "@regression",
         monochrome = true,
         dryRun = false
 )
