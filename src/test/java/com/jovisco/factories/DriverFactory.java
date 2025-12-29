@@ -59,6 +59,7 @@ public class DriverFactory {
         var geckoOptions = new FirefoxOptions();
         geckoOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
         // geckoOptions.addArguments("--remote-allow-origins=*");
+        geckoOptions.addArguments("--headless");
         var driver = new FirefoxDriver(geckoOptions);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
         return driver;
