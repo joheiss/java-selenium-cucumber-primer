@@ -43,7 +43,12 @@ public class DriverFactory {
         var chromeOptions = new ChromeOptions();
         chromeOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
         chromeOptions.addArguments("--remote-allow-origins=*");
-        chromeOptions.addArguments("--headless");
+        // chromeOptions.addArguments("--headless");
+        chromeOptions.addArguments("--headless=new");
+        chromeOptions.addArguments("--no-sandbox");
+        chromeOptions.addArguments("--disable-dev-shm-usage");
+        chromeOptions.addArguments("--disable-gpu");
+        chromeOptions.addArguments("--window-size=1920,1080");
         var driver = new ChromeDriver(chromeOptions);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
         return driver;
