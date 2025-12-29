@@ -1,7 +1,8 @@
   # docker-compose.yaml
   services:
     jenkins:
-      image: jenkins/jenkins:lts
+      image: jenkins-selenium-2025
+      shm_size: 2gb
       privileged: true
       user: root
       ports:
