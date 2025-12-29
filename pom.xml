@@ -84,7 +84,7 @@
         <version>3.1.2</version>
         <configuration>
           <suiteXmlFiles>
-            <suiteXmlFile>src/test/java/com.jovisco/runners/testng/testng.xml</suiteXmlFile>
+            <suiteXmlFile>src/test/java/com/jovisco/runners/testng/testng.xml</suiteXmlFile>
           </suiteXmlFiles>
           <properties>
             <configurationParameters>
