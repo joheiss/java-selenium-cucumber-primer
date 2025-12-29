@@ -2,7 +2,11 @@
   services:
     jenkins:
       image: jenkins-selenium-2025
+      depends_on:
+        - selenium-hub
       shm_size: 2gb
+      networks:
+        - selenium-grid
       privileged: true
       user: root
       ports:
@@ -12,3 +16,28 @@
       volumes:
         - ~/jenkins_compose/jenkins_configuration:/var/jenkins_home
         - /var/run/docker.sock:/var/run/docker.sock
+
+    selenium-hub:
+      image: selenium/hub:4.20.0
+      container_name: selenium-hub
+      ports:
+        - "4444:4444"
+      networks:
+        - selenium-grid
+
+    firefox:
+      image: selenium/node-firefox:4.20.0
+      container_name: firefox
+      depends_on:
+        - selenium-hub
+      shm_size: 2gb
+      environment:
+        - SE_EVENT_BUS_HOST=selenium-hub
+        - SE_EVENT_BUS_PUBLISH_PORT=4442
+        - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      networks:
+        - selenium-grid
+
+  networks:
+    selenium-grid:
+      driver: bridge

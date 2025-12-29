@@ -7,10 +7,14 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
 import java.time.Duration;
 import java.util.Properties;
 
@@ -60,7 +64,14 @@ public class DriverFactory {
         geckoOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
         // geckoOptions.addArguments("--remote-allow-origins=*");
         geckoOptions.addArguments("--headless");
-        var driver = new FirefoxDriver(geckoOptions);
+        geckoOptions.setAcceptInsecureCerts(true);
+        WebDriver driver;
+        try {
+            driver = new RemoteWebDriver(URI.create("http://selenium-hub:4444/wd/hub").toURL(), geckoOptions);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+        // var driver = new FirefoxDriver(geckoOptions);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
         return driver;
     }
