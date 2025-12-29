@@ -78,6 +78,7 @@ public class DriverFactory {
 
     private static String getDriverPath() {
         String os = SystemUtils.OS_NAME;
+        System.out.println("OS: " + os);
         String suffix = "linux";
         if (os.toLowerCase().contains("mac")) {
             suffix = "mac";
