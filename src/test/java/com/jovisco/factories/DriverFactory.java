@@ -91,10 +91,15 @@ public class DriverFactory {
     private static String getBrowserType() {
         String browserType = null;
         try {
-            Properties props = new Properties();
-            var file = new FileInputStream("src/test/java/com/jovisco/properties/config.properties");
-            props.load(file);
-            return props.getProperty("browser").toLowerCase().trim();
+            browserType = System.getProperty("browserType");
+            if (browserType == null || browserType.isEmpty()) {
+                Properties props = new Properties();
+                var file = new FileInputStream("src/test/java/com/jovisco/properties/config.properties");
+                props.load(file);
+                browserType = props.getProperty("browser").toLowerCase().trim();
+            } else {
+                browserType = browserType.toLowerCase().trim();
+            }
         } catch (FileNotFoundException e) {
             System.out.println("config.properties file not found");
             browserType = "chrome";
